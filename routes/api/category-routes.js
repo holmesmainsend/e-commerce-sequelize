@@ -40,6 +40,10 @@ router.post('/', async (req, res) => {
   }
 });
 
+
+
+
+
 // router.put('/:id', (req, res) => {
 //   Category.update(
 //     {
@@ -59,6 +63,10 @@ router.post('/', async (req, res) => {
 //       res.json(err);
 //     });
 // });
+
+
+
+
 
 router.delete('/:id', async (req, res) => {
   try {
