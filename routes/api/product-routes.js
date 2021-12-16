@@ -7,8 +7,14 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   try {
     const productData = await Product.findAll({
-      include: [{ model: Category }]
-      // REMEMBER TO ADD TAG DATA
+      include: [{ model: Category }, 
+        { model: Tag,
+          as: "tag",
+          attributes: ["id", "tag_name"],
+          through: {
+            attributes: [],
+          }
+        }]
     });
     res.status(200).json(productData);
   } catch (err) {
@@ -20,9 +26,14 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const productData = await Product.findByPk(req.params.id, {
-      // Add Book as a second model to JOIN with
-      include: [{ model: Category }]
-      // REMEMBER TO ADD TAG DATA
+      include: [{ model: Category }, 
+        { model: Tag,
+          as: "tag",
+          attributes: ["id", "tag_name"],
+          through: {
+            attributes: [],
+          }
+        }]
     });
 
     if (!productData) {
@@ -35,6 +46,11 @@ router.get('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
+
+
+
 
 // create new product
 router.post('/', (req, res) => {
@@ -109,6 +125,11 @@ router.put('/:id', (req, res) => {
       res.status(400).json(err);
     });
 });
+
+
+
+
+
 
 router.delete('/:id', async (req, res) => {
   try {
